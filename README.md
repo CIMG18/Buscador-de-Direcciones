@@ -1,6 +1,12 @@
 # Buscador-de-Direcciones
 Aplicación web simple que busca asentamientos (colonias, fraccionamientos, etc.) en la base de datos MariaDB y autocompleta Municipio, Estado y CP.
 
+## Requisitos
+ 
+- Python 3.9+
+- MariaDB 10.4+
+- El archivo `codigos_postales_mexico.csv` (catálogo de SEPOMEX ya procesado)
+
 ## 1. Instalar dependencias
 
 ```bash
@@ -20,15 +26,26 @@ DB_CONFIG = {
     ...
 }
 ```
+### 3. Configurar la base de datos
+ 
+Ejecuta el script `sql/CodigosPostales.sql` en MariaDB. **Importante:** antes de
+correrlo, abre el archivo y reemplaza la ruta del CSV en la línea:
+ 
+```sql
+LOAD DATA LOCAL INFILE '/ruta/completa/codigos_postales_mexico.csv'
+```
+ 
+por la ruta real donde tengas el archivo en tu máquina.
 
-## 3. Verificar el nombre de tu tabla y columnas
+
+## 4. Verificar el nombre de tu tabla y columnas
 
 El código asume una tabla llamada `codigos_postales` con las columnas:
 `CP, Asentamiento, Tipo_Asentamiento, Municipio, Estado`
 (tal como quedaron en tu tabla actual). Si tu tabla o columnas se llaman
 distinto, ajusta la consulta SQL dentro de `app.py` en la función `buscar()`.
 
-## 4. Ejecutar la aplicación
+## 5. Ejecutar la aplicación
 
 ```bash
 python app.py
@@ -45,3 +62,9 @@ Abre tu navegador en: http://127.0.0.1:5000
    contra MariaDB y regresa hasta 10 resultados en JSON.
 4. Al hacer clic en un resultado, se autocompletan Municipio, Estado y CP
    en pantalla.
+
+## Notas
+ 
+- El CSV del catálogo no está incluido en este repositorio por su tamaño;
+  puede descargarse desde el portal correspondiente o generarse un script
+  de conversión de Excel a CSV.
