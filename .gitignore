@@ -3,6 +3,19 @@ __pycache__/
 *.py[codz]
 *$py.class
 
+# Archivos de datos pesados (si no quieres subir el CSV/xls completo)
+*.csv
+*.xls
+*.xlsx
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# Editores
+.vscode/
+.idea/
+
 # C extensions
 *.so
 
@@ -150,6 +163,8 @@ activemq-data/
 *.sage.py
 
 # Environments
+__pycache__/
+*.pyc
 .env
 .envrc
 .venv
