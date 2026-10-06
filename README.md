@@ -26,7 +26,7 @@ DB_CONFIG = {
     ...
 }
 ```
-### 3. Configurar la base de datos
+## 3. Configurar la base de datos
  
 Ejecuta el script `sql/CodigosPostales.sql` en MariaDB. **Importante:** antes de
 correrlo, abre el archivo y reemplaza la ruta del CSV en la línea:
