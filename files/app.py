@@ -8,8 +8,8 @@ app = Flask(__name__)
 # -----------------------------------------------------
 DB_CONFIG = {
     'host': 'localhost',
-    'user': 'test',
-    'password': 'Gatitos123',
+    'user': 'user-name',
+    'password': 'user-password',
     'database': 'CodigosPostales',
     'charset': 'utf8mb4',
     'cursorclass': pymysql.cursors.DictCursor
