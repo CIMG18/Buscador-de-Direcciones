@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Buscador de Direcciones</title>
+<style>
+    body { font-family: Arial, sans-serif; max-width: 600px; margin: 40px auto; }
+    h1 { font-size: 1.4rem; }
+    #q { width: 100%; padding: 10px; font-size: 1rem; box-sizing: border-box; }
+    #resultados { list-style: none; padding: 0; margin-top: 4px; border: 1px solid #ddd; }
+    #resultados li { padding: 8px 10px; cursor: pointer; border-bottom: 1px solid #eee; }
+    #resultados li:hover { background: #f0f0f0; }
+    #detalle { margin-top: 20px; padding: 15px; background: #f7f7f7; border-radius: 6px; display: none; }
+    #detalle p { margin: 4px 0; }
+    label { font-weight: bold; }
+</style>
+</head>
+<body>
+
+<h1>Buscador de Direcciones</h1>
+<p>Escribe parte del nombre de una colonia o asentamiento:</p>
+
+<input type="text" id="q" placeholder="Ej. Centro, Reforma, San José...">
+<ul id="resultados"></ul>
+
+<div id="detalle">
+    <p><label>Asentamiento:</label> <span id="d_asentamiento"></span></p>
+    <p><label>Tipo:</label> <span id="d_tipo"></span></p>
+    <p><label>Municipio:</label> <span id="d_municipio"></span></p>
+    <p><label>Estado:</label> <span id="d_estado"></span></p>
+    <p><label>CP:</label> <span id="d_cp"></span></p>
+</div>
+
+<script>
+const input = document.getElementById('q');
+const lista = document.getElementById('resultados');
+const detalle = document.getElementById('detalle');
+let timeoutId;
+
+input.addEventListener('input', () => {
+    clearTimeout(timeoutId);
+    const termino = input.value.trim();
+
+    if (termino.length < 2) {
+        lista.innerHTML = '';
+        return;
+    }
+
+    // Pequeño retraso para no disparar una petición por cada tecla
+    timeoutId = setTimeout(() => buscar(termino), 300);
+});
+
+async function buscar(termino) {
+    const resp = await fetch(`/buscar?q=${encodeURIComponent(termino)}`);
+    const datos = await resp.json();
+    mostrarResultados(datos);
+}
+
+function mostrarResultados(datos) {
+    lista.innerHTML = '';
+    datos.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = `${item.Asentamiento} - ${item.Municipio}, ${item.Estado}`;
+        li.addEventListener('click', () => seleccionar(item));
+        lista.appendChild(li);
+    });
+}
+
+function seleccionar(item) {
+    document.getElementById('d_asentamiento').textContent = item.Asentamiento;
+    document.getElementById('d_tipo').textContent = item.Tipo_Asentamiento;
+    document.getElementById('d_municipio').textContent = item.Municipio;
+    document.getElementById('d_estado').textContent = item.Estado;
+    document.getElementById('d_cp').textContent = item.CP;
+
+    detalle.style.display = 'block';
+    lista.innerHTML = '';
+    input.value = item.Asentamiento;
+}
+</script>
+
+</body>
+</html>
