@@ -41,9 +41,7 @@ por la ruta real donde tengas el archivo en tu máquina.
 ## 4. Verificar el nombre de tu tabla y columnas
 
 El código asume una tabla llamada `codigos_postales` con las columnas:
-`CP, Asentamiento, Tipo_Asentamiento, Municipio, Estado`
-(tal como quedaron en tu tabla actual). Si tu tabla o columnas se llaman
-distinto, ajusta la consulta SQL dentro de `app.py` en la función `buscar()`.
+`CP, Asentamiento, Tipo_Asentamiento, Municipio, Estado`. Si tu tabla o columnas se llaman distinto, ajusta la consulta SQL dentro de `app.py` en la función `buscar()`.
 
 ## 5. Ejecutar la aplicación
 
